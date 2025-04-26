@@ -5,10 +5,11 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: aprigent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/02/06 12:53:20 by aprigent          #+#    #+#             */
-/*   Updated: 2025/02/06 12:54:45 by aprigent         ###   ########.fr       */
+/*   Created: 2025/02/06 17:07:27 by aprigent          #+#    #+#             */
+/*   Updated: 2025/02/06 17:08:47 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 #include <stdlib.h>
 
 int	is_sep(char c, char *charset)
@@ -68,12 +69,16 @@ char	**ft_split(char *str, char *charset)
 	index = 0;
 	length = count_words(str, charset);
 	res = malloc(sizeof(char *) * (length + 1));
+	if (!res)
+		return (NULL);
 	while (index < length)
 	{
 		while (is_sep(*str, charset))
 			str++;
 		temp_index = 0;
 		res[index] = malloc(sizeof(char) * ft_strlen(str, charset) + 1);
+		if (!res[index])
+			return (NULL);
 		while (!is_sep(*str, charset) && *str)
 			res[index][temp_index++] = *str++;
 		res[index][temp_index] = 0;

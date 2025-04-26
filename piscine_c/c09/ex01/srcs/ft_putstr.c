@@ -1,33 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_ultimate_range.c                                :+:      :+:    :+:   */
+/*   ft_putstr.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: aprigent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/01/27 17:58:46 by aprigent          #+#    #+#             */
-/*   Updated: 2025/01/31 21:49:39 by aprigent         ###   ########.fr       */
+/*   Created: 2025/02/06 17:06:28 by aprigent          #+#    #+#             */
+/*   Updated: 2025/02/06 17:06:29 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-#include <limits.h>
-#include <stdlib.h>
 
-int	ft_ultimate_range(int **range, int min, int max)
+#include <unistd.h>
+
+int	ft_strlen(char *str)
 {
 	int	i;
-	int	j;
 
-	i = min;
-	j = 0;
-	if (min >= max)
-		return (0);
-	(*range) = (int *) malloc((max - min) * sizeof(int));
-	if ((*range) == NULL)
-		return (-1);
-	while (i < max)
-	{
-		(*range)[i - min] = i;
+	i = 0;
+	while (str[i])
 		i++;
-	}
-	return (max - min);
+	return (i);
+}
+
+void	ft_putstr(char *str)
+{
+	write(1, str, ft_strlen(str));
 }
