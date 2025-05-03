@@ -6,7 +6,7 @@
 /*   By: aprigent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 09:44:45 by aprigent          #+#    #+#             */
-/*   Updated: 2025/05/03 13:34:17 by aprigent         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:46:42 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
-#include <fcntl.h>
+# include <fcntl.h>
 
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 10
+#  define BUFFER_SIZE 10000
 
 # endif
 

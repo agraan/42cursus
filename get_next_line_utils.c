@@ -6,7 +6,7 @@
 /*   By: aprigent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/02 10:45:51 by aprigent          #+#    #+#             */
-/*   Updated: 2025/05/03 16:36:48 by aprigent         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:30:23 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,6 @@ size_t	ft_strlen(const char *str)
 	size_t	i;
 
 	i = 0;
-	//printf("string = |%s|\n", str);
-	if (!str)
-		return (0);
 	while (str[i])
 		i++;
 	return (i);

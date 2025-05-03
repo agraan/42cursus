@@ -6,7 +6,7 @@
 /*   By: aprigent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/01 17:49:25 by aprigent          #+#    #+#             */
-/*   Updated: 2025/05/03 16:57:15 by aprigent         ###   ########.fr       */
+/*   Updated: 2025/05/03 18:50:14 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,23 +30,21 @@ char	*read_line(int fd, char *stack, char *retval)
 	while ((count = read(fd, stack, BUFFER_SIZE)) > 0)
 	{
 		i = -1;
+		stack[count] = 0;
 		while (stack[++i])
 		{
-			stack[BUFFER_SIZE] = 0;
 			if (stack[i] == '\n')
 			{
 				retval = addretval(retval, stack, ft_strlen(retval) + i + 2);
 				temp = ft_substr(stack, i + 1, count - i);
-				gnl_strcpy(stack, temp, ft_strlen(temp));
+				gnl_strcpy(stack, temp, ft_strlen(temp) + 1);
 				free(temp);
-				//printf("stack = %s\n", stack);
 				return (retval);
 			}
 		}
 		retval = addretval(retval, stack, ft_strlen(retval) + BUFFER_SIZE + 2);
 	}
 	return (retval);
-
 }
 
 char	*read_stack(int fd, char *stack, char *retval)
@@ -64,32 +62,27 @@ char	*read_stack(int fd, char *stack, char *retval)
 	temp = ft_substr(stack, 0, i + 1);
 	retval = addretval(retval, temp, i + 1);
 	free(temp);
-	temp = ft_substr(stack, i + 1, ft_strlen(stack) + 1);
-	gnl_strcpy(stack, temp, ft_strlen(stack) - i);
+	temp = ft_substr(stack, i, ft_strlen(stack) + 1);
+	gnl_strcpy(stack, temp, ft_strlen(stack + i + 1));
 	free(temp);
 	if (!stack[i])
-		read_line(fd, stack, retval);
+		retval = read_line(fd, stack, retval);
 	return (retval);
 }
 
 char	*get_next_line(int fd)
 {
-	static char	*stack[1024];
+	static char	stack[1024][BUFFER_SIZE];
 	char		*retval;
 
 	retval = malloc(1);
-	stack[fd] = NULL;
-	if (BUFFER_SIZE >= 0)
-		stack[fd] = (char *)malloc((BUFFER_SIZE + 1) * sizeof(char));
-	if (!retval || stack[fd])
+	if (!retval)
 		return (NULL);
 	retval[0] = 0;
 	if (stack[fd][0])
 		retval = read_stack(fd, stack[fd], retval);
 	else
 		retval = read_line(fd, stack[fd], retval);
-	if (!retval)
-		return (free(retval), NULL);
 	return (retval);
 }
 
@@ -101,10 +94,16 @@ int main(int ac, char **av)
 		if (fd == -1)
 			return (1);
 		char *temp;
-		printf("%s", temp = get_next_line(fd));
-		free(temp);
-		printf("%s", temp = get_next_line(fd));
-		free(temp);
+		temp = get_next_line(fd);
+		while (temp)
+		{
+			if (temp)
+			{
+				printf("%s", temp);
+				free(temp);
+			}
+			temp = get_next_line(fd);
+		}
 		close(fd);
 	}
 	return (0);
