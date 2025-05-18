@@ -8,31 +8,33 @@ LIBFT_DIR = ./libft
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
-INCLUDES = -I$(LIBFT_DIR) ./includes/push_swap.h
+INCLUDES = ./includes/push_swap.h
 
 LDFLAGS = -L$(LIBFT_DIR) -lft
 
-SRCS_DIR = ./srcs
+SRCS_DIR = ./srcs/
 
-SRCS = push_swap.c 
+SRCS = main.c parse.c 
 
-OBJS_DIR = ./.objs
+OBJS_DIR = ./.objs/
 
 OBJS = $(SRCS:${SRCS_DIR}%.c=${OBJS_DIR}%.o)
 
 $(NAME): $(OBJS) ${INCLUDES} $(LIBFT)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-
+	@make -C $(LIBFT_DIR)
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft
 
 ${OBJS_DIR}%.o: ${SRCS_DIR}%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(NAME)
+all: $(NAME) 
 
 clean:
-	rm -f $(OBJS)
+	@make -C $(LIBFT_DIR) clean
+	rm -rf $(OBJS_DIR)
 
 fclean: clean
+	@make -C $(LIBFT_DIR) fclean
 	rm -f $(NAME)
 
 re: fclean all
