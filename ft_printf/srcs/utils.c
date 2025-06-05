@@ -6,7 +6,7 @@
 /*   By: aprigent <aprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:47:29 by aprigent          #+#    #+#             */
-/*   Updated: 2025/05/17 21:00:19 by aprigent         ###   ########.fr       */
+/*   Updated: 2025/05/20 10:51:03 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,8 @@ int	write_padding(char c, int len)
 
 char	*ft_itoa_base(unsigned long nbr, char *base, char *str, int *i)
 {
+	if (!str)
+		return (NULL);
 	if (nbr >= 16)
 	{
 		ft_itoa_base(nbr / 16, base, str, i);

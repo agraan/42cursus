@@ -2,32 +2,32 @@ NAME = push_swap
 
 CC = cc
 
-CFLAGS = -Wall -Wextra -Werror
+CFLAGS = -Wall -Wextra -Werror -Iincludes -L$(LIBFT_DIR) -lft
 
-LIBFT_DIR = ./libft
+LIBFT_DIR = ./libft/
 
 LIBFT = $(LIBFT_DIR)/libft.a
 
-INCLUDES = ./includes/push_swap.h
+INCLUDES = ./includes/push_swap.h $(LIBFT_DIR)includes/libft.h
 
 LDFLAGS = -L$(LIBFT_DIR) -lft
 
 SRCS_DIR = ./srcs/
 
-SRCS = main.c parse.c 
+SRCS = main.c parse.c
 
 OBJS_DIR = ./.objs/
 
-OBJS = $(SRCS:${SRCS_DIR}%.c=${OBJS_DIR}%.o)
+OBJS = $(SRCS:%.c=${OBJS_DIR}%.o)
 
 $(NAME): $(OBJS) ${INCLUDES} $(LIBFT)
 	@make -C $(LIBFT_DIR)
-	$(CC) $(CFLAGS) -o $(NAME) $(OBJS) -L$(LIBFT_DIR) -lft
+	$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
 
 ${OBJS_DIR}%.o: ${SRCS_DIR}%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
-all: $(NAME) 
+all: $(NAME)
 
 clean:
 	@make -C $(LIBFT_DIR) clean

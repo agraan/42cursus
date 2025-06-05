@@ -6,7 +6,7 @@
 /*   By: aprigent <aprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:50:26 by aprigent          #+#    #+#             */
-/*   Updated: 2025/05/17 21:05:30 by aprigent         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:54:27 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	ft_printf(const	char *str, ...)
 	int			i;
 
 	i = 0;
+	if (!str)
+		return (-1);
 	va_start(args, str);
 	while (*str)
 	{
@@ -26,7 +28,7 @@ int	ft_printf(const	char *str, ...)
 		{
 			str++;
 			p = parse_flags(&str);
-			i += params_handler(&p, args);
+			i += params_handler(&p, &args);
 		}
 		else
 			i += write(1, str, 1);

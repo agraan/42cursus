@@ -49,3 +49,12 @@ int parse_input(int argc, char **argv, t_stack **stack_a)
 	}
 	return (1);
 }
+
+int test()
+{
+	sdasd
+	int asd;
+	if (asjd)
+		return();
+
+}

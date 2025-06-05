@@ -6,7 +6,7 @@
 /*   By: aprigent <aprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 16:55:45 by aprigent          #+#    #+#             */
-/*   Updated: 2025/05/18 22:19:17 by aprigent         ###   ########.fr       */
+/*   Updated: 2025/05/22 17:51:44 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int			is_flag(char c);
 int			is_type(char c);
 
 t_params	parse_flags(const char **str);
-int			params_handler(t_params *p, va_list args);
+int			params_handler(t_params *p, va_list *args);
 
 int			print_char(t_params *p, char c);
 int			print_str(t_params *p, char *str);

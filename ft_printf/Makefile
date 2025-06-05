@@ -6,7 +6,7 @@
 #    By: aprigent <aprigent@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/14 23:07:05 by aprigent          #+#    #+#              #
-#    Updated: 2025/05/18 22:17:27 by aprigent         ###   ########.fr        #
+#    Updated: 2025/05/20 15:24:22 by aprigent         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -34,7 +34,7 @@ all: ${NAME}
 
 ${NAME}: ${OBJS}
 	@make -C $(LIBFT)
-	@mv ./libft/libft.a $(NAME)
+	@cp ${LIBFT}/libft.a $(NAME)
 	@ar rcs ${NAME} ${OBJS}
 
 $(OBJS_DIR)%.o: ${SRCS_DIR}%.c ${HEADER}
@@ -44,12 +44,11 @@ $(OBJS_DIR)%.o: ${SRCS_DIR}%.c ${HEADER}
 bonus: all
 
 clean:
-	@rm -f ${OBJS}
+	@rm -rf ${OBJS_DIR}
 	@make clean -C ${LIBFT}
-	@rm -rf ./.objs
 
 fclean: clean
 	@rm -f ${NAME}
-	@rm -f ${LIBFT}/libft.a
+	@make fclean -C ${LIBFT}
 
 re: fclean all 

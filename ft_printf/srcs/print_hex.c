@@ -6,7 +6,7 @@
 /*   By: aprigent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:41:09 by aprigent          #+#    #+#             */
-/*   Updated: 2025/05/17 21:14:10 by aprigent         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:31:45 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	print_hex(t_params *p, unsigned int x)
 	len = 0;
 	str = base(p, x, &len);
 	if (!str)
-		return (-1);
+		return (0);
 	str[len] = 0;
 	count = hash(p, x, &len);
 	count += print_pad(p, len);

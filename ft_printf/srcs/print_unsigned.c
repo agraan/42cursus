@@ -6,7 +6,7 @@
 /*   By: aprigent <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/15 20:20:53 by aprigent          #+#    #+#             */
-/*   Updated: 2025/05/17 21:27:38 by aprigent         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:33:13 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	print_unsigned(t_params *p, unsigned int u)
 
 	str = ft_itoa_unsigned(u);
 	if (!str)
-		return (-1);
+		return (0);
 	len = ft_strlen(str);
 	count = print_pad(p, len);
 	if (u || !(p->dot && !p->precision))

@@ -6,7 +6,7 @@
 /*   By: aprigent <aprigent@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/09 18:46:44 by aprigent          #+#    #+#             */
-/*   Updated: 2025/05/17 21:07:14 by aprigent         ###   ########.fr       */
+/*   Updated: 2025/05/20 15:31:15 by aprigent         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,8 @@ int	print_pointer(t_params *p, void *ptr)
 	len = 0;
 	str = "0123456789abcdef";
 	str = ft_itoa_base((unsigned long)ptr, str, malloc(100), &len);
+	if (!str)
+		return (0);
 	str[len] = 0;
 	count = 0;
 	len = ft_strlen(str);
