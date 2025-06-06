@@ -18,7 +18,7 @@ int	ft_pipe(char *argv[], char *envp[], char **args)
 
 	int		pipefd[2];
 	pid_t	pid;
-	char	**paths;
+	char	*path;
 	char	*temp;
 
 	if (pipe(pipefd) == -1)
@@ -28,17 +28,13 @@ int	ft_pipe(char *argv[], char *envp[], char **args)
 		return (perror("error"), -1);
 	else if (pid == 0)
 	{
-		int i = 0;
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[0]);
 		close(pipefd[1]);
-		paths = get_path(argv[2], envp);
-		while (*paths)
-		{
-			i = execve(*paths, args, envp);
-			paths++;
-		}
-		ft_printf("exceve return : %d", i);
+		path = get_path(argv[2], envp);
+		if (!path)
+			perror("access");
+		execve(path, args, envp);
 		perror("execve");
 		exit(EXIT_FAILURE);
 	}
@@ -46,10 +42,14 @@ int	ft_pipe(char *argv[], char *envp[], char **args)
 	{
 		waitpid(pid, NULL, 0);
 		close(pipefd[1]);
-		ft_printf("parents");
 		temp = get_next_line(pipefd[0]);
-		if (temp)
-			printf("%s", temp);
+		while (temp)
+		{
+			ft_printf("%s", temp);
+			free(temp);
+			temp = get_next_line(pipefd[0]);
+		}
+		free(temp);
 		close(pipefd[0]);
 	}
 	return (-1);
@@ -57,12 +57,14 @@ int	ft_pipe(char *argv[], char *envp[], char **args)
 
 int main(int argc, char *argv[], char *envp[])
 {
-	char **args;
+	char	**args;
 
 	if (argc != 3)
 		return (write(2, "Error\n", 6), 1);
 	args = get_args(argv);
 	if (!args)
+		exit(EXIT_FAILURE);
+	if (access(argv[1], R_OK))
 		exit(EXIT_FAILURE);
 	if (ft_pipe(argv, envp, args) == -1)
 		exit(EXIT_FAILURE);

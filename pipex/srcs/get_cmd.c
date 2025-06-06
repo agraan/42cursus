@@ -12,28 +12,33 @@
 
 #include "pipex.h"
 
-char **get_path(char *cmd, char *envp[])
+char *get_path(char *cmd, char *envp[])
 {
-	char **paths;
+	char	**paths;
+	int		i;
 
-    while (*envp)
+	i = 0;
+    while (envp[i])
     {
-        if (!ft_strncmp(*envp, "PATH=", 5))
+        if (!ft_strncmp(envp[i], "PATH=", 5))
             break ;
-        envp++;
+        i++;
     }
-	if (!*envp)
+	if (!envp[i])
 		exit(EXIT_FAILURE);
-	paths = ft_split(*envp, ':');
+	paths = ft_split(envp[i] + 5, ':');
 	if (!paths)
 		exit(EXIT_FAILURE);
-	while (*paths)
+	i = 0;
+	while (paths[i])
 	{
-		ft_strlcat(*paths, "/", ft_strlen(*paths) + 1);
-		ft_strlcat(*paths, cmd, ft_strlen(*paths) + ft_strlen(cmd));
-		paths++;
+		ft_strlcat(paths[i], "/", ft_strlen(paths[i]) + 2);
+		ft_strlcat(paths[i], cmd, ft_strlen(paths[i]) + ft_strlen(cmd) + 2);
+		if (!access(paths[i], X_OK))
+			return (paths[i]);
+		i++;
 	}
-	return (paths);
+	return (NULL);
 }
 
 char **get_args(char *argv[])
@@ -43,8 +48,8 @@ char **get_args(char *argv[])
 	args = malloc(sizeof(char *) * 3);
 	if (!args)
 		return (NULL);
-	args[0] = argv[1];
-	args[1] = argv[2];
+	args[0] = argv[2];
+	args[1] = argv[1];
 	args[2] = NULL;
 	return (args);
 }

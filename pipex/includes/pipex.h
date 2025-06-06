@@ -22,6 +22,6 @@
 # include "ft_printf.h"
 # include "get_next_line.h"
 
-char	**get_path(char *cmd, char *envp[]);
+char	*get_path(char *cmd, char *envp[]);
 char	**get_args(char *argv[]);
 #endif
