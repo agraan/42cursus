@@ -23,5 +23,5 @@
 # include "get_next_line.h"
 
 char	*get_path(char *cmd, char *envp[]);
-char	**get_args(char *argv[]);
+char	**get_args(char *argv_1, char *argv_2);
 #endif

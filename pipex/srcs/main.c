@@ -17,16 +17,17 @@ int	ft_pipe(char *argv[], char *envp[], char **args)
 {
 
 	int		pipefd[2];
-	pid_t	pid;
+	pid_t	pid1;
+	pid_t	pid2;
 	char	*path;
 	char	*temp;
 
 	if (pipe(pipefd) == -1)
 		perror("pipe");
-	pid = fork();
-	if (pid == -1)
+	pid1 = fork();
+	if (pid1 == -1)
 		return (perror("error"), -1);
-	else if (pid == 0)
+	else if (pid1 == 0)
 	{
 		dup2(pipefd[1], STDOUT_FILENO);
 		close(pipefd[0]);
@@ -38,9 +39,28 @@ int	ft_pipe(char *argv[], char *envp[], char **args)
 		perror("execve");
 		exit(EXIT_FAILURE);
 	}
+	pid2 = fork();
+	if (pid2 == -1)
+		return (perror("error"), -1);
+	else if (pid2 == 0)
+	{
+		waitpid(pid1, NULL, 0);
+		close(pipefd[1]);
+		pipefd[1] = open(argv[4], O_CREAT);
+		dup2(pipefd[1], STDOUT_FILENO);
+		close(pipefd[0]);
+		path = get_path(argv[3], envp);
+		if (!path)
+			perror("access");
+		args = get_args(argv[3], pipefd[0]);
+		if (!args)
+			exit(EXIT_FAILURE);
+		execve(path, args, envp);
+		perror("execve");
+		exit(EXIT_FAILURE);
+	}
 	else
 	{
-		waitpid(pid, NULL, 0);
 		close(pipefd[1]);
 		temp = get_next_line(pipefd[0]);
 		while (temp)
@@ -52,16 +72,18 @@ int	ft_pipe(char *argv[], char *envp[], char **args)
 		free(temp);
 		close(pipefd[0]);
 	}
-	return (-1);
+	waitpid(pid1, NULL, 0);
+	waitpid(pid2, NULL, 0);
+	return (0);
 }
 
 int main(int argc, char *argv[], char *envp[])
 {
 	char	**args;
 
-	if (argc != 3)
+	if (argc != 5)
 		return (write(2, "Error\n", 6), 1);
-	args = get_args(argv);
+	args = get_args(argv[2], argv[1]);
 	if (!args)
 		exit(EXIT_FAILURE);
 	if (access(argv[1], R_OK))

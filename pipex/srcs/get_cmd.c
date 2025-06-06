@@ -41,15 +41,15 @@ char *get_path(char *cmd, char *envp[])
 	return (NULL);
 }
 
-char **get_args(char *argv[])
+char **get_args(char *argv_1, char *argv_2
 {
 	char **args;
 
 	args = malloc(sizeof(char *) * 3);
 	if (!args)
 		return (NULL);
-	args[0] = argv[2];
-	args[1] = argv[1];
+	args[0] = argv_1;
+	args[1] = argv_2;
 	args[2] = NULL;
 	return (args);
 }
